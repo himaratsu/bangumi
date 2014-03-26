@@ -41,7 +41,9 @@ class ContentsController < ApplicationController
   private
   
     def content_params
-      params[:content].permit(:title, :description)
+      params[:content].permit(:title, :description,
+       :video_url_1, :video_url_2, :video_url_3,
+       :embed_url_1, :embed_url_2, :embed_url_3)
     end
 
 end

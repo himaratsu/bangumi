@@ -3,3 +3,17 @@
 <p><%= link_to '詳細を別ページで確認', @content.link%></p>
 
 <p><%= @content.description %></p>
+
+<% if @content.video_url_1.present? %>
+<p><%= link_to @content.video_url_1, @content.video_url_1 %></p>
+<p><%= link_to @content.video_url_2, @content.video_url_2 %></p>
+<p><%= link_to @content.video_url_3, @content.video_url_3 %></p>
+<% end %>
+
+
+<% if @content.embed_url_1.present? %>
+<h4>Embed</h4>
+<p><%= link_to raw(@content.embed_url_1) %></p>
+<p><%= link_to raw(@content.embed_url_2) %></p>
+<p><%= link_to raw(@content.embed_url_3) %></p>
+<% end %>
