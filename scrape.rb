@@ -4,6 +4,15 @@ require "open-uri"
 require "rubygems"
 require "nokogiri"
 
+# for active record
+require "active_record"
+require "./config/boot"
+require "./config/environment"
+
+config = YAML.load_file("./config/database.yml")
+ActiveRecord::Base.establish_connection(config["development"])
+
+
 url = "http://www.tvguide.or.jp/TF1102LS.php?regionId=14&genreId=2"
 
 if ARGV.size == 0
@@ -32,20 +41,24 @@ doc.xpath('//table[@class="result"]/tr[@class="bg01"]').each do |node|
   p node.xpath('td')[1].text
 
   #title
-  p node.xpath('td')[2].text.gsub(/\n/, "")
+  p title = node.xpath('td')[2].text.gsub(/\n/, "")
 
   #link
   path = node.xpath('td')[2].xpath('a').attribute("onclick").value
   path = path.gsub(/javascript:popup\('/, "").gsub(/'\)/, "")
-  p "http://www.tvguide.or.jp/" + path
+  p path = "http://www.tvguide.or.jp/" + path
 
   #station
   p node.xpath('td')[3].text
 
   #cast
-  p node.xpath('td')[4].text
+  p cast = node.xpath('td')[4].text
 
   #separetor
   p "--------------------"
+
+  Content.create(:title => title,
+   :description => cast,
+   :link => path)
 
 end
