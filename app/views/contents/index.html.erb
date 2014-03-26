@@ -1,0 +1,17 @@
+<h1>Bangumi</h1>
+
+<ul>
+
+<% @contents.each do |content| %>
+<li>
+	<%= link_to content.title, content_path(content.id) %> - <%= content.description %>
+	<%= link_to '[Edit]', edit_content_path(content.id) %>
+	<%= link_to '[Delete]', content_path(content.id),
+	method: :delete,
+	data: {confirm: "are you sure?"} %>
+</li>
+<% end %>
+
+</ul>
+
+<p><%= link_to 'Add New', new_content_path %></p>
